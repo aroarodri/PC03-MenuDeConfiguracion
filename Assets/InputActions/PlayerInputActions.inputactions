@@ -1,12 +1,12 @@
 {
-    "name": "Player",
+    "name": "PlayerInputActions",
     "maps": [
         {
-            "name": "PlayerInput",
+            "name": "Playe",
             "id": "aced1def-540e-49a2-a810-740358ea29dd",
             "actions": [
                 {
-                    "name": "Movement",
+                    "name": "Jump",
                     "type": "Button",
                     "id": "26ceed87-64a0-4ce1-acee-8fb8c98c91bc",
                     "expectedControlType": "Button",
@@ -15,7 +15,19 @@
                     "initialStateCheck": false
                 }
             ],
-            "bindings": []
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e22bc676-5043-4304-b86c-1d9abb070bb1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
