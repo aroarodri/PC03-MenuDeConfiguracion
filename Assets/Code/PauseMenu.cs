@@ -19,7 +19,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
     }
 
-    public void OnPause(InputAction.CallbackContext context)
+    public void OnPause(InputAction.CallbackContext callbackContext)
     {
         if (isPaused)
             Resume();

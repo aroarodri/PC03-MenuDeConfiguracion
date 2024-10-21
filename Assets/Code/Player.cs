@@ -4,13 +4,13 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private PauseMenu pauseMenu;
 
     private float upForce = 250f;
     private Rigidbody rb;
     private Vector2 move;
 
     private CutomActionsController cutomActionsController;
-    private PauseMenu pauseMenu;
 
     // Start is called before the first frame update
     void Awake()
