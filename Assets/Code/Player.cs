@@ -1,12 +1,11 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float upForce = 250f;
     [SerializeField] private float moveSpeed = 5f;
 
+    private float upForce = 250f;
     private Rigidbody rb;
     private Vector2 move;
 
@@ -17,6 +16,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         cutomActionsController = new CutomActionsController();
+
         rb = GetComponent<Rigidbody>();
     }
 
@@ -30,28 +30,35 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         cutomActionsController.Player.Enable();
-        cutomActionsController.Player.Jump.performed += OnJump;
         cutomActionsController.Player.Move.performed += OnMove;
         cutomActionsController.Player.Move.canceled += OnMove;
+        cutomActionsController.Player.Jump.performed += OnJump;
 
         cutomActionsController.PauseMenu.Enable();
         cutomActionsController.PauseMenu.Pause.performed += pauseMenu.OnPause;
     }
 
+    private void OnDisable()
+    {
+        cutomActionsController.Player.Disable();
+
+        cutomActionsController.Player.Move.performed -= OnMove;
+        cutomActionsController.Player.Move.canceled -= OnMove;
+        cutomActionsController.Player.Jump.performed -= OnJump;
+
+        cutomActionsController.PauseMenu.Disable();
+
+        cutomActionsController.PauseMenu.Pause.performed -= pauseMenu.OnPause;
+    }
+
 
     public void OnJump(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.performed)
-        {
-            rb.AddForce(Vector3.up * upForce);
-        }
+        rb.AddForce(Vector3.up * upForce);
     }
 
     public void OnMove(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.performed)
-        {
-            move = callbackContext.ReadValue<Vector2>();
-        }
+        move = callbackContext.ReadValue<Vector2>();
     }
 }

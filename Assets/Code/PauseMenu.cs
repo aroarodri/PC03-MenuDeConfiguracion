@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -33,7 +30,7 @@ public class PauseMenu : MonoBehaviour
     private void Pause()
     {
         isPaused = true;
-        // Pausa el tiempo
+
         Time.timeScale = 0f;
 
         pauseMenu.SetActive(true);
