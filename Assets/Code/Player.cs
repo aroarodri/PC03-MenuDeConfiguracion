@@ -3,16 +3,23 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
+    // Variables
     [SerializeField] private PauseMenu pauseMenu;
 
+    private float _moveSpeed = 5f;
     private float upForce = 250f;
     private Rigidbody rb;
     private Vector2 move;
-
     private CutomActionsController cutomActionsController;
 
-    // Start is called before the first frame update
+    // Getter y setter
+    public float MoveSpeed
+    {
+        get { return _moveSpeed; }
+        set { _moveSpeed = value; }
+    }
+
+    // Inicializa el CustomActionsController y el RigidBody.
     void Awake()
     {
         cutomActionsController = new CutomActionsController();
@@ -20,43 +27,44 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+    // Actualiza la posición del jugador.
     void FixedUpdate()
     {
-        Vector3 movement = new Vector3(move.x, 0, move.y) * moveSpeed * Time.fixedDeltaTime;
+        Vector3 movement = new Vector3(move.x, 0, move.y) * MoveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
     }
 
+    // Activa los ActionMaps y se suscriben a ellos.
     private void OnEnable()
     {
         cutomActionsController.Player.Enable();
+        cutomActionsController.PauseMenu.Enable();
+
         cutomActionsController.Player.Move.performed += OnMove;
         cutomActionsController.Player.Move.canceled += OnMove;
         cutomActionsController.Player.Jump.performed += OnJump;
-
-        cutomActionsController.PauseMenu.Enable();
         cutomActionsController.PauseMenu.Pause.performed += pauseMenu.OnPause;
     }
 
+    // Desactiva los ActionMaps y se desuscriben a ellos.
     private void OnDisable()
     {
         cutomActionsController.Player.Disable();
+        cutomActionsController.PauseMenu.Disable();
 
         cutomActionsController.Player.Move.performed -= OnMove;
         cutomActionsController.Player.Move.canceled -= OnMove;
         cutomActionsController.Player.Jump.performed -= OnJump;
-
-        cutomActionsController.PauseMenu.Disable();
-
         cutomActionsController.PauseMenu.Pause.performed -= pauseMenu.OnPause;
     }
 
-
+    // Función para hacer que salte el jugador.
     public void OnJump(InputAction.CallbackContext callbackContext)
     {
         rb.AddForce(Vector3.up * upForce);
     }
 
+    // Función para mover al jugador.
     public void OnMove(InputAction.CallbackContext callbackContext)
     {
         move = callbackContext.ReadValue<Vector2>();
